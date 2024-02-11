@@ -11,7 +11,7 @@ class TodoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,11 +19,14 @@ class TodoRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
+        // Retrieve the ID from the route parameters
+        $id = $this->route('id');
+
         return [
-            'title' => 'required|string|max:50',
-            'description' => 'required|string'
+            'title' => 'required|string|max:50|unique:todos,title,' . $id,
+            'description' => 'required|string',
         ];
     }
 }

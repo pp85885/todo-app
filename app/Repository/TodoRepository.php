@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Interface\TodoRepositoryInterface;
 use App\Models\Todo;
+use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class TodoRepository implements TodoRepositoryInterface
 {
@@ -30,5 +31,9 @@ class TodoRepository implements TodoRepositoryInterface
     public function deleteTodo($id)
     {
         Todo::destroy($id);
+    }
+    public function getAllTodosPaginate($records)
+    {
+        return Todo::latest()->paginate($records);
     }
 }
